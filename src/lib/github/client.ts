@@ -1,7 +1,7 @@
 import { cache } from "react";
-import { mapGitHubUser } from "./mapper";
-import { GitHubSearchSchema} from "./schemas";
-import { GitHubUser } from "./types";
+import { mapGitHubUser, mapGitHubUserDetails } from "./mapper";
+import { GitHubSearchSchema, GitHubUserDetailsSchema} from "./schemas";
+import { GitHubUser,GitHubUserDetails } from "./types";
 
 const BASE_URL = "https://api.github.com";
 
@@ -29,3 +29,26 @@ export const searchUsers = cache(async (query: string): Promise<GitHubUser[] > =
   return users;
 
 })
+
+export const getUser = cache(
+  async (login: string): Promise<GitHubUserDetails> => {
+    const response = await fetch(
+      `${BASE_URL}/users/${encodeURIComponent(login)}`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user.");
+    }
+
+    const json = await response.json();
+
+    // Validate
+    const data = GitHubUserDetailsSchema.parse(json);
+
+    // Transform
+    return mapGitHubUserDetails(data);
+  }
+);

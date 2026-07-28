@@ -1,5 +1,6 @@
-import type {GitHubUser} from "@/lib/github/types";
+import type { GitHubUser} from "@/lib/github/types";
 import Image from "next/image";
+import Link from  "next/link";
 
 type UserCardProps = {
   user: GitHubUser;
@@ -7,8 +8,8 @@ type UserCardProps = {
 
 export function UserCard({ user }: UserCardProps) {
   return (
-    <a 
-        href={user.profileUrl} target="_blank" rel="noopener noreferrer" className="mx-auto block w-full">
+    <Link href={`/user/${user.username}`}>
+        {/* href={user.profileUrl} target="_blank" rel="noopener noreferrer" className="mx-auto block w-full"> */}
       <article
         className=" 
         flex h-full flex-col
@@ -39,6 +40,6 @@ export function UserCard({ user }: UserCardProps) {
 
         </div>
       </article>
-    </a>
+    </Link>
   );
 }
