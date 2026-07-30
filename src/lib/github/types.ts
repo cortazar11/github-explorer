@@ -16,3 +16,21 @@ export type GitHubUserDetails = {
   company?: string;
   blog?: string;
 };
+
+export type GitHubRepo = {
+  id: number;
+  name: string;
+  owner: string;
+  homepage?:string;
+  license?: string ;
+  description?: string;
+  stargazersCount: number;
+  language?: string;
+  repoUrl: string;
+  forksCount: number;
+  openIssuesCount: number;
+  defaultBranch: string;
+  visibility: "public" | "private";
+  createdAt: string;
+  updatedAt: string;
+};

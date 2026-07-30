@@ -24,6 +24,31 @@ export const GitHubUserDetailsSchema=z.object({
   blog:z.string()
 
 })
+
+export const GitHubRepoSchema=z.object({
+  id:z.number(),
+  name:z.string(),
+  owner: z.object
+    ({
+      login:z.string()
+    }),
+  homepage:z.string().url().nullable(),
+  license:
+  z.object({
+    name:z.string()
+  }).nullable(),
+  description:z.string().nullable(),
+  stargazers_count:z.number(),
+  language:z.string().nullable(),
+  html_url:z.string().url(),
+  forks_count:z.number(),
+  open_issues_count: z.number(),
+  default_branch: z.string(),
+  visibility: z.enum(["public","private"]),
+  created_at:z.string(),
+  updated_at:z.string()
+})  
+export type GitHubApiRepo=z.infer<typeof GitHubRepoSchema>
 export type GitHubApiUser = z.infer<typeof GitHubUserSchema>;
 export type GitHubApiSearch = z.infer<typeof GitHubSearchSchema>;
 export type GitHubApiUserDetails = z.infer<typeof GitHubUserDetailsSchema>;

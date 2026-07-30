@@ -1,5 +1,5 @@
-import type { GitHubApiUser,GitHubApiUserDetails } from "./schemas";
-import type { GitHubUser, GitHubUserDetails } from "./types";
+import type { GitHubApiUser,GitHubApiUserDetails, GitHubApiRepo } from "./schemas";
+import type { GitHubUser, GitHubUserDetails, GitHubRepo } from "./types";
 
 export function mapGitHubUser(user: GitHubApiUser): GitHubUser {
   return {
@@ -22,4 +22,24 @@ export function mapGitHubUserDetails(user: GitHubApiUserDetails): GitHubUserDeta
     company:user.company ?? undefined,
     blog: user.blog || undefined
   }
+}
+
+  export function mapGitHubRepo(repo: GitHubApiRepo): GitHubRepo {
+    return {
+      id: repo.id,
+      name: repo.name,
+      owner:repo.owner.login,
+      homepage: repo.homepage ?? undefined,
+      license: repo.license?.name ?? undefined,
+      description: repo.description ?? undefined,
+      stargazersCount: repo.stargazers_count,
+      language: repo.language ?? undefined,
+      repoUrl: repo.html_url,
+      forksCount: repo.forks_count,
+      openIssuesCount:repo.open_issues_count,
+      defaultBranch: repo.default_branch,
+      visibility: repo.visibility,
+      createdAt: repo.created_at,
+      updatedAt: repo.updated_at,
+    };  
 }
