@@ -32,7 +32,7 @@ export const GitHubRepoSchema=z.object({
     ({
       login:z.string()
     }),
-  homepage:z.string().url().nullable(),
+  homepage:z.string().nullable(),
   license:
   z.object({
     name:z.string()

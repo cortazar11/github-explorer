@@ -7,6 +7,7 @@ type RepositoryCardProps = {
 
 export function RepositoryCard({ repo }: RepositoryCardProps) {
   return (
+    <Link href={`/repo/${repo.owner}/${repo.name}`} className="block">
     <article className="
             h-full
             rounded-xl
@@ -57,5 +58,6 @@ export function RepositoryCard({ repo }: RepositoryCardProps) {
         </Link>
         <div>Updated at: {repo.updatedAt}</div>
     </article>
+    </Link>
   );
 }

@@ -14,6 +14,7 @@ export const searchUsers = cache(async (query: string): Promise<GitHubUser[] > =
         cache: "no-store",
         }
     );
+    
 
     if (!response.ok) {
      throw new Error("Failed to fetch users.");
@@ -85,6 +86,7 @@ export const getRepository=cache(
             cache: "no-store",
           }
         );
+       
     
         if (!response.ok) {
           throw new Error("Failed to fetch repo.");
