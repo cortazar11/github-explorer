@@ -41,5 +41,10 @@ export function mapGitHubUserDetails(user: GitHubApiUserDetails): GitHubUserDeta
       visibility: repo.visibility,
       createdAt: repo.created_at,
       updatedAt: repo.updated_at,
+      topics: repo.topics ?? [],
+      parent: repo.parent?.full_name ?? undefined,
+      pushedAt: repo.pushed_at,
+      archived: repo.archived,
+      fork: repo.fork
     };  
 }

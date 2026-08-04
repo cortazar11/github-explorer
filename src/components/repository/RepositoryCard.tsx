@@ -7,7 +7,6 @@ type RepositoryCardProps = {
 
 export function RepositoryCard({ repo }: RepositoryCardProps) {
   return (
-    <Link href={`/repo/${repo.owner}/${repo.name}`} className="block">
     <article className="
             h-full
             rounded-xl
@@ -20,6 +19,12 @@ export function RepositoryCard({ repo }: RepositoryCardProps) {
             hover:-translate-y-1
             hover:shadow-lg
         ">
+     <h3>
+      <Link href={`/repo/${repo.owner}/${repo.name}`}>
+        {repo.name}
+      </Link>
+    </h3>
+    
       <h3 className="text-xl font-semibold text-slate-900">{repo.name}</h3>
       {repo.description && (
             <p className="mt-2 text-slate-600">
@@ -58,6 +63,6 @@ export function RepositoryCard({ repo }: RepositoryCardProps) {
         </Link>
         <div>Updated at: {repo.updatedAt}</div>
     </article>
-    </Link>
+    
   );
 }

@@ -1,43 +1,43 @@
-import { searchUsers } from "@/lib/github";
+import { searchUsers,searchRepositories } from "@/lib/github";
 import { SearchForm } from "@/components/search/SearchForm";
 import { UserGrid } from "@/components/user/UserGrid";
+import { RepositoryGrid } from "@/components/repository/RepositoryGrid";
 
 type Props = {
   searchParams: Promise<{
+    type: "users" | "repositories";
     q?: string;
   }>;
 };
 
-export  default async function SearchPage({searchParams}:Props){
-    const {q=""} = await searchParams;
-    
-    if(!q){
-        return <p>No search query.</p>
-    }
+export default async function SearchPage({ searchParams }: Props) {
+  const { q = "", type = "users" } = await searchParams;
 
-    const users=await searchUsers(q)
-    
-    console.log(users)
-
-
-    return(
-        <main className="mx-auto max-w-7xl px-6 py-12">
+  if (!q) {
+    return (
+      <main className="container mx-auto px-4 py-8">
         <SearchForm />
+        <p className="mt-8">No search query.</p>
+      </main>
+    );
+  }
 
-        <div className="mt-10">
-            <h1 className="text-3xl font-bold">
-            Results for &quot;{q}&quot;
-            </h1>
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <SearchForm query={q} type={type} />
+      <h2 className="mb-6 text-3xl font-bold">
+        {type === "users"
+            ? `Users matching "${q}"`
+            : `Repositories matching "${q}"`}
+        </h2>
 
-            <p className="mt-2 text-muted-foreground">
-            {users.length} users found
-            </p>
-        </div>
-
-        <div className="mt-8">
-            <UserGrid users={users} />
-        </div>
+      <section className="mt-10">
+        {type === "users" ? (
+          <UserGrid users={await searchUsers(q)} />
+        ) : (
+          <RepositoryGrid repos={await searchRepositories(q)} />
+        )}
+      </section>
     </main>
-)
-
-}   
+  );
+}

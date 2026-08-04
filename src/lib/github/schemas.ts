@@ -46,7 +46,15 @@ export const GitHubRepoSchema=z.object({
   default_branch: z.string(),
   visibility: z.enum(["public","private"]),
   created_at:z.string(),
-  updated_at:z.string()
+  updated_at:z.string(),
+  topics: z.array(z.string()).optional().default([]),
+  parent:z.object({
+    full_name:z.string()
+  }).nullable().optional(),
+  pushed_at:z.string(),
+  archived:z.boolean(),
+  fork:z.boolean(),
+    
 })  
 export type GitHubApiRepo=z.infer<typeof GitHubRepoSchema>
 export type GitHubApiUser = z.infer<typeof GitHubUserSchema>;

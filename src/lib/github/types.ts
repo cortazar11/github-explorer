@@ -33,4 +33,9 @@ export type GitHubRepo = {
   visibility: "public" | "private";
   createdAt: string;
   updatedAt: string;
+  topics: string[];
+  parent?: string;
+  pushedAt: string;
+  archived: boolean;
+  fork: boolean;
 };

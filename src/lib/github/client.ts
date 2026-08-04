@@ -101,3 +101,31 @@ export const getRepository=cache(
         return mapGitHubRepo(data);
       }
 )
+
+export const searchRepositories=cache(
+    async (query: string): Promise<GitHubRepo[]> => {
+        const response = await fetch(
+          `${BASE_URL}/search/repositories?q=${encodeURIComponent(query)}`,
+          {
+            cache: "no-store",
+          }
+        );  
+        if (!response.ok) {
+          throw new Error("Failed to fetch repos.");
+        }   
+
+        const json = await response.json();   
+        
+        console.log(json)
+// Validate   
+        const data = z.object({
+            total_count: z.number(),
+            items: z.array(GitHubRepoSchema)
+        }).parse(json);     
+
+        // Transform      
+        return data.items.map(mapGitHubRepo);     
+
+    }       
+
+) 

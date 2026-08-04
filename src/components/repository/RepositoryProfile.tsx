@@ -13,7 +13,8 @@ export function RepositoryProfile({ repository }: RepositoryProfileProps) {
                 </h1>
                 {repository.description && <p className="mt-4 max-w-lg text-slate-600">{repository.description}</p>}        
             </div>
-            <div className="flex flex-wrap gap-4">
+            {/* <div className="flex flex-wrap gap-4"> */}
+            <div className="grid grid-cols-3 gap-6">
                 <div className="flex items-center gap-2">
                     <span className="font-semibold">Stars:</span>
                     <span>{repository.stargazersCount}</span>
@@ -27,7 +28,8 @@ export function RepositoryProfile({ repository }: RepositoryProfileProps) {
                     <span>{repository.openIssuesCount}</span>   
                 </div>      
             </div>  
-            <div className="flex flex-wrap gap-4">
+            {/* <div className="flex flex-wrap gap-4"> */}
+            <div className="grid-cols-2">
                 {repository.language && (
                     <div className="flex items-center gap-2">
                         <span className="font-semibold">Language:</span>
@@ -54,14 +56,6 @@ export function RepositoryProfile({ repository }: RepositoryProfileProps) {
                 )} 
                 </div>
                 <div className="flex flex-wrap gap-4">
-                    <span className="font-semibold">Created At:</span> 
-                    <span>{new Date(repository.createdAt).toLocaleDateString()}</span>
-                </div>
-                <div className="flex flex-wrap gap-4">
-                    <span className="font-semibold">Updated At:</span> 
-                    <span>{new Date(repository.updatedAt).toLocaleDateString()}</span>
-                </div>
-                <div className="flex flex-wrap gap-4">
                 {repository.homepage && (   
                     <div className="flex items-center gap-2">   
                         <span className="font-semibold">Homepage:</span>
@@ -70,7 +64,28 @@ export function RepositoryProfile({ repository }: RepositoryProfileProps) {
                         </a>
                     </div>
                 )}      
-            </div>       
+                </div>  
+                <div className="mt-8 grid grid-cols-2 gap-8 border-t pt-6">
+                    <div className="flex flex-wrap gap-4">
+                        <span className="font-semibold">Created At:</span> 
+                        <span>{new Date(repository.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-4">
+                        <span className="font-semibold">Updated At:</span> 
+                        <span>{new Date(repository.updatedAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+                <div className="mt-8 border-t pt-6">
+                    <a
+                        href={repository.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="..."
+                        >
+                        Open on GitHub →
+                    </a>
+                </div>
+                     
         </div>
                
     )

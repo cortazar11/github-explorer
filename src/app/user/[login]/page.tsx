@@ -1,6 +1,6 @@
 import { getUser } from "@/lib/github";
 import  {ProfileCard}  from "@/components/user/ProfileCard";
-import {RepositoryGrid} from "@/components/user/RepositoryGrid";
+import {RepositoryGrid} from "@/components/repository/RepositoryGrid";
 import { getUserRepos } from "@/lib/github";
 
 type Props={
