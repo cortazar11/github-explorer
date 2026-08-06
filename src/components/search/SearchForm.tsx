@@ -6,11 +6,15 @@ import { Input } from "@/components/ui/input";
 type SearchFormProps = {
   query?: string;
   type?: "users" | "repositories";
+  sort?: "stars" | "forks" | "updated";
+  order?: "asc" | "desc";
 };
 
 export function SearchForm({
   query = "",
   type = "users",
+  sort = "stars",
+  order = "desc"
 }: SearchFormProps) {
   return (
     <div>
@@ -47,8 +51,8 @@ export function SearchForm({
             type="radio"
             name="type"
             value="users"
-            checked={type === "users"}
-            readOnly
+            defaultChecked={type === "users"}
+            
           />
           Users
         </label>
@@ -58,12 +62,77 @@ export function SearchForm({
             type="radio"
             name="type"
             value="repositories"
-            checked={type === "repositories"}
-            readOnly
+            defaultChecked={type === "repositories"}
+            
           />
           Repositories
         </label>
       </div>
+      <div className="mt-4 flex items-center gap-6">
+          <span className="text-sm text-muted-foreground">
+            SortRepositories by:
+          </span>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="sort"
+                value="stars"
+                defaultChecked={sort === "stars"} 
+              />
+              Best match
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="sort" 
+                value="stars"
+                defaultChecked={sort === "stars"}
+              />
+              Most stars
+            </label>
+            <label className="flex items-center gap-2"> 
+              <input
+                type="radio"
+                name="sort"
+                value="forks"
+                defaultChecked={sort === "forks"}
+              />
+              Most forks
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="sort"
+                value="updated"
+                defaultChecked={sort === "updated"}
+              />
+              Recently updated
+            </label>
+          </div>
+          <div className="mt-4 flex items-center gap-6">
+            <span className="text-sm text-muted-foreground">
+              OrderRepositories by:
+            </span>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="order"
+                value="asc"
+                defaultChecked={order === "asc"}
+              />
+              Ascending
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="order"
+                value="desc"
+                defaultChecked={order === "desc"}
+              />
+              Descending
+            </label>  
+            
+          </div>
     </form>
     </div>
     

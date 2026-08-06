@@ -1,16 +1,32 @@
 import { cache } from "react";
 import { z } from "zod";
 import { mapGitHubUser, mapGitHubUserDetails,mapGitHubRepo } from "./mapper";
-import { GitHubSearchSchema, GitHubUserDetailsSchema,GitHubRepoSchema} from "./schemas";
+import { GitHubSearchSchema, GitHubUserDetailsSchema,GitHubRepoSchema, GitHubUserSchema} from "./schemas";
 import { GitHubUser,GitHubUserDetails, GitHubRepo } from "./types";
 
 const BASE_URL = "https://api.github.com";
 
-export const searchUsers = cache(async (query: string): Promise<GitHubUser[] > => {
+type UserSearchOptions = {
+  query: string;
+  page?: number;
+  perPage?: number;
+};
 
-    const response = await fetch(
-    `${BASE_URL}/search/users?q=${encodeURIComponent(query)}`,
-        {
+type UserSearchResult = {
+  total: number;
+  users: GitHubUser[];
+};
+
+export const searchUsers = cache(async ({
+    query,
+    page = 1,
+    perPage = 100,
+  }: UserSearchOptions): Promise<UserSearchResult > => {
+ 
+
+  const response = await fetch(
+    `${BASE_URL}/search/users?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
+    {
         cache: "no-store",
         }
     );
@@ -23,12 +39,17 @@ export const searchUsers = cache(async (query: string): Promise<GitHubUser[] > =
     const json = await response.json();
 
     // 1. Validate
-  const data = GitHubSearchSchema.parse(json);
+  const data = z.object({
+    total_count: z.number(),
+    items: z.array(GitHubUserSchema),
+  }).parse(json);
+    // Transform
+  return {
+    total: data.total_count,
+    users: data.items.map(mapGitHubUser),
+  };
 
-  // 2. Transform
-  const users=data.items.map(mapGitHubUser);
-
-  return users;
+ 
 
 })
 
@@ -102,10 +123,23 @@ export const getRepository=cache(
       }
 )
 
+type RepositorySearchOptions = {
+    query: string;
+    sort?: "stars" | "forks" | "updated";
+    order?: "asc" | "desc";
+    page?: number;
+    perPage?: number;
+};
+
+type RepositorySearchResult = {
+  total: number;
+  repos: GitHubRepo[];
+};
+
 export const searchRepositories=cache(
-    async (query: string): Promise<GitHubRepo[]> => {
+    async ({query, sort,order, page, perPage}: RepositorySearchOptions): Promise<RepositorySearchResult> => {  
         const response = await fetch(
-          `${BASE_URL}/search/repositories?q=${encodeURIComponent(query)}`,
+          `${BASE_URL}/search/repositories?q=${encodeURIComponent(query)}&sort=${encodeURIComponent(sort ?? "")}&order=${encodeURIComponent(order ?? "")}&page=${page ?? 1}&per_page=${perPage ?? 100}`,
           {
             cache: "no-store",
           }
@@ -116,7 +150,7 @@ export const searchRepositories=cache(
 
         const json = await response.json();   
         
-        console.log(json)
+        
 // Validate   
         const data = z.object({
             total_count: z.number(),
@@ -124,7 +158,10 @@ export const searchRepositories=cache(
         }).parse(json);     
 
         // Transform      
-        return data.items.map(mapGitHubRepo);     
+        return {
+            total: data.total_count,
+            repos: data.items.map(mapGitHubRepo)
+        };
 
     }       
 
