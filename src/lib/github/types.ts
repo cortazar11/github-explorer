@@ -39,3 +39,19 @@ export type GitHubRepo = {
   archived: boolean;
   fork: boolean;
 };
+
+export type UserSearchFilters = {
+  repos?: string;
+  location?: string;
+  language?: string;
+  followers?: string;
+};
+
+export type RepositorySearchFilters = {
+  inDescription?: boolean;
+  repoFollowers?: string;
+  forks?: string;
+  stars?: string;
+  pushedAfter?: string;
+  language?: string;
+};

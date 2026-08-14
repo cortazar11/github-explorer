@@ -2,12 +2,15 @@ import { cache } from "react";
 import { z } from "zod";
 import { mapGitHubUser, mapGitHubUserDetails,mapGitHubRepo } from "./mapper";
 import { GitHubSearchSchema, GitHubUserDetailsSchema,GitHubRepoSchema, GitHubUserSchema} from "./schemas";
-import { GitHubUser,GitHubUserDetails, GitHubRepo } from "./types";
+import { GitHubUser,GitHubUserDetails, GitHubRepo,UserSearchFilters, RepositorySearchFilters } from "./types";
+import { buildUserSearchQuery, buildRepositorySearchQuery } from "./query";
+
 
 const BASE_URL = "https://api.github.com";
 
 type UserSearchOptions = {
   query: string;
+  filters?: UserSearchFilters;
   page?: number;
   perPage?: number;
 };
@@ -19,13 +22,14 @@ type UserSearchResult = {
 
 export const searchUsers = cache(async ({
     query,
+    filters={},
     page = 1,
     perPage = 100,
   }: UserSearchOptions): Promise<UserSearchResult > => {
  
-
+  const searchQuery = buildUserSearchQuery(query, filters);
   const response = await fetch(
-    `${BASE_URL}/search/users?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
+    `${BASE_URL}/search/users?q=${encodeURIComponent(searchQuery)}&page=${page}&per_page=${perPage}`,
     {
         cache: "no-store",
         }
@@ -125,6 +129,7 @@ export const getRepository=cache(
 
 type RepositorySearchOptions = {
     query: string;
+    filters?: RepositorySearchFilters;
     sort?: "stars" | "forks" | "updated";
     order?: "asc" | "desc";
     page?: number;
@@ -137,9 +142,10 @@ type RepositorySearchResult = {
 };
 
 export const searchRepositories=cache(
-    async ({query, sort,order, page, perPage}: RepositorySearchOptions): Promise<RepositorySearchResult> => {  
+    async ({query, filters={}, sort,order, page, perPage}: RepositorySearchOptions): Promise<RepositorySearchResult> => {  
+        const searchQuery = buildRepositorySearchQuery(query, filters);
         const response = await fetch(
-          `${BASE_URL}/search/repositories?q=${encodeURIComponent(query)}&sort=${encodeURIComponent(sort ?? "")}&order=${encodeURIComponent(order ?? "")}&page=${page ?? 1}&per_page=${perPage ?? 100}`,
+          `${BASE_URL}/search/repositories?q=${encodeURIComponent(searchQuery)}&sort=${encodeURIComponent(sort ?? "")}&order=${encodeURIComponent(order ?? "")}&page=${page ?? 1}&per_page=${perPage ?? 100}`,
           {
             cache: "no-store",
           }
