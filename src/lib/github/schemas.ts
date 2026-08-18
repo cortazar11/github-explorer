@@ -55,8 +55,39 @@ export const GitHubRepoSchema=z.object({
   archived:z.boolean(),
   fork:z.boolean(),
     
-})  
+})
+
+export const GitHubIssueSchema = z.object({
+  id: z.number(),
+  number: z.number(),
+  title: z.string(),
+  html_url: z.string().url(),
+
+  state: z.enum(["open", "closed"]),
+
+  user: z.object({
+    login: z.string(),
+    avatar_url: z.string().url(),
+  }),
+
+  labels: z.array(
+    z.object({
+      name: z.string(),
+    })
+  ),
+
+  comments: z.number(),
+
+  created_at: z.string(),
+  updated_at: z.string(),
+
+  repository_url: z.string().url(),
+});
+
+
+
 export type GitHubApiRepo=z.infer<typeof GitHubRepoSchema>
 export type GitHubApiUser = z.infer<typeof GitHubUserSchema>;
 export type GitHubApiSearch = z.infer<typeof GitHubSearchSchema>;
 export type GitHubApiUserDetails = z.infer<typeof GitHubUserDetailsSchema>;
+export type GitHubApiIssue = z.infer<typeof GitHubIssueSchema>;

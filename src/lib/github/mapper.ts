@@ -1,5 +1,5 @@
-import type { GitHubApiUser,GitHubApiUserDetails, GitHubApiRepo } from "./schemas";
-import type { GitHubUser, GitHubUserDetails, GitHubRepo } from "./types";
+import type { GitHubApiUser,GitHubApiUserDetails, GitHubApiRepo,GitHubApiIssue } from "./schemas";
+import type { GitHubUser, GitHubUserDetails, GitHubRepo, GitHubIssue } from "./types";
 
 export function mapGitHubUser(user: GitHubApiUser): GitHubUser {
   return {
@@ -48,3 +48,22 @@ export function mapGitHubUserDetails(user: GitHubApiUserDetails): GitHubUserDeta
       fork: repo.fork
     };  
 }
+
+export function mapGitHubIssue(issue: GitHubApiIssue): GitHubIssue {
+  return {
+    id: issue.id,
+    number: issue.number,
+    title: issue.title, 
+    issueUrl: issue.html_url,  
+    state: issue.state,
+    user: {
+      username: issue.user.login,  
+      avatarUrl: issue.user.avatar_url,
+    },
+    labels: issue.labels,
+    comments: issue.comments,
+    createdAt: issue.created_at,
+    updatedAt: issue.updated_at,
+    repositoryUrl: issue.repository_url,
+  };
+} 

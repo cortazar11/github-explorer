@@ -1,9 +1,9 @@
 import { cache } from "react";
 import { z } from "zod";
-import { mapGitHubUser, mapGitHubUserDetails,mapGitHubRepo } from "./mapper";
-import { GitHubSearchSchema, GitHubUserDetailsSchema,GitHubRepoSchema, GitHubUserSchema} from "./schemas";
-import { GitHubUser,GitHubUserDetails, GitHubRepo,UserSearchFilters, RepositorySearchFilters } from "./types";
-import { buildUserSearchQuery, buildRepositorySearchQuery } from "./query";
+import { mapGitHubUser, mapGitHubUserDetails,mapGitHubRepo, mapGitHubIssue } from "./mapper";
+import { GitHubSearchSchema, GitHubUserDetailsSchema,GitHubRepoSchema, GitHubUserSchema, GitHubIssueSchema} from "./schemas";
+import { GitHubUser,GitHubUserDetails, GitHubRepo,UserSearchFilters, RepositorySearchFilters, ContributionSearchFilters, GitHubIssue } from "./types";
+import { buildUserSearchQuery, buildRepositorySearchQuery,buildContributionSearchQuery} from "./query";
 
 
 const BASE_URL = "https://api.github.com";
@@ -172,3 +172,45 @@ export const searchRepositories=cache(
     }       
 
 ) 
+
+type ContributionSearchOptions = {
+  query: string;
+  filters?: ContributionSearchFilters;
+  page?: number;
+  perPage?: number;
+};
+
+type ContributionSearchResult = {
+  total: number;
+  issues: GitHubIssue[];
+};
+
+export const searchContributions=cache(
+    async ({query, filters={}, page, perPage}: ContributionSearchOptions): Promise<ContributionSearchResult> => {
+        const searchQuery = buildContributionSearchQuery(query, filters);
+        const response = await fetch(
+          `${BASE_URL}/search/issues?q=${encodeURIComponent(searchQuery)}&page=${page ?? 1}&per_page=${perPage ?? 100}`,
+          {
+            cache: "no-store",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch issues.");
+        } 
+
+        const json = await response.json();
+
+        // Validate 
+        const data = z.object({
+            total_count: z.number(),
+            items: z.array(GitHubIssueSchema)
+        }).parse(json);
+
+      // Transform
+        return {
+            total: data.total_count,
+            issues: data.items.map(mapGitHubIssue)
+        };
+    }
+  )

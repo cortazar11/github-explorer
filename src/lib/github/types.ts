@@ -55,3 +55,32 @@ export type RepositorySearchFilters = {
   pushedAfter?: string;
   language?: string;
 };
+
+export type ContributionSearchFilters = {
+  label?: "good-first-issue" | "help-wanted" | "both";
+  language?: string;
+ 
+};
+
+export type GitHubIssue = {
+  id: number;
+  title: string;
+  number: number;
+  issueUrl: string;
+
+  state: "open" | "closed";
+
+  user: {
+    username: string;
+    avatarUrl: string;
+  };
+
+  labels: {
+    name: string;
+  }[];
+
+  comments: number;
+  createdAt: string;
+  updatedAt: string;
+  repositoryUrl: string;
+};  

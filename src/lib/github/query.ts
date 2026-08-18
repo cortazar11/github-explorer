@@ -1,6 +1,7 @@
 import type {
   UserSearchFilters,
   RepositorySearchFilters,
+  ContributionSearchFilters,
 } from "./types";
 
 export function buildUserSearchQuery(
@@ -59,4 +60,24 @@ export function buildRepositorySearchQuery(
   }
 
   return parts.join(" ");
+}
+
+export function buildContributionSearchQuery(
+  query: string,
+  filters: ContributionSearchFilters
+): string {
+  const parts = [query];
+      
+  if (filters.label) {
+    parts.push(`label:${filters.label}`);
+  }   
+
+  if (filters.language) {
+    parts.push(`language:${filters.language}`);
+  } 
+
+  
+
+  return parts.join(" ");
+
 }
