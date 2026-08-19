@@ -2,8 +2,8 @@ import Link from "next/link";
 import { PageNumbers } from "./PageNumbers";
 
 type PaginationProps = {
-  query: string;
-  type: "users" | "repositories";
+  query?: string;
+  type?: "users" | "repositories";
   currentPage: number;
   totalPages: number;
   sort?: "stars" | "forks" | "updated";

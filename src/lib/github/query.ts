@@ -67,6 +67,10 @@ export function buildContributionSearchQuery(
   filters: ContributionSearchFilters
 ): string {
   const parts = [query];
+
+    if (filters.state) {
+     parts.push(`is:${filters.state}`);
+    }
       
   if (filters.label) {
     parts.push(`label:${filters.label}`);
@@ -76,7 +80,9 @@ export function buildContributionSearchQuery(
     parts.push(`language:${filters.language}`);
   } 
 
-  
+  if (filters.repo) {
+    parts.push(`repo:${filters.repo}`);
+  }
 
   return parts.join(" ");
 

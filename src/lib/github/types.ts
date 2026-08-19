@@ -57,9 +57,12 @@ export type RepositorySearchFilters = {
 };
 
 export type ContributionSearchFilters = {
-  label?: "good-first-issue" | "help-wanted" | "both";
+  state?: "open" | "closed";
+  label?: string;
   language?: string;
- 
+  repo?: string;
+  created?: string;
+  updated?: string;
 };
 
 export type GitHubIssue = {
@@ -83,4 +86,5 @@ export type GitHubIssue = {
   createdAt: string;
   updatedAt: string;
   repositoryUrl: string;
+  
 };  

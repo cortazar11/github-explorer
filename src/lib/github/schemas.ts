@@ -82,6 +82,7 @@ export const GitHubIssueSchema = z.object({
   updated_at: z.string(),
 
   repository_url: z.string().url(),
+  
 });
 
 

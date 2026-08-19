@@ -187,6 +187,10 @@ type ContributionSearchResult = {
 
 export const searchContributions=cache(
     async ({query, filters={}, page, perPage}: ContributionSearchOptions): Promise<ContributionSearchResult> => {
+        const contributionFilters: ContributionSearchFilters= {
+          state: "open",
+          ...filters
+        }
         const searchQuery = buildContributionSearchQuery(query, filters);
         const response = await fetch(
           `${BASE_URL}/search/issues?q=${encodeURIComponent(searchQuery)}&page=${page ?? 1}&per_page=${perPage ?? 100}`,
