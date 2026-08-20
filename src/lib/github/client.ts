@@ -191,7 +191,7 @@ export const searchContributions=cache(
           state: "open",
           ...filters
         }
-        const searchQuery = buildContributionSearchQuery(query, filters);
+        const searchQuery = buildContributionSearchQuery(query, contributionFilters);
         const response = await fetch(
           `${BASE_URL}/search/issues?q=${encodeURIComponent(searchQuery)}&page=${page ?? 1}&per_page=${perPage ?? 100}`,
           {
@@ -199,9 +199,15 @@ export const searchContributions=cache(
           }
         );
 
+        // if (!response.ok) {
+        //   throw new Error("Failed to fetch issues.");
+        // } 
         if (!response.ok) {
-          throw new Error("Failed to fetch issues.");
-        } 
+        const error = await response.text();
+        console.log("GitHub error:", response.status, error);
+
+        throw new Error("Failed to fetch issues.");
+    }
 
         const json = await response.json();
 

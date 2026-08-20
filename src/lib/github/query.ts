@@ -73,7 +73,7 @@ export function buildContributionSearchQuery(
     }
       
   if (filters.label) {
-    parts.push(`label:${filters.label}`);
+    parts.push(`label:"${filters.label}"`);
   }   
 
   if (filters.language) {
