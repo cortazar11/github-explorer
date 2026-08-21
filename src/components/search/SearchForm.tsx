@@ -3,9 +3,10 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+
 type SearchFormProps = {
   query?: string;
-  type?: "users" | "repositories";
+  type?: "users" | "repositories" ;
   sort?: "stars" | "forks" | "updated";
   order?: "asc" | "desc";
 
@@ -43,7 +44,7 @@ export function SearchForm({
   return (
     <div>
       <form
-        action="/search"
+        action={type === "contributions" ? "/contributions" : "/search"}
         className="mx-auto mt-8 w-full max-w-2xl"
       >
       <div className="flex gap-3">
@@ -90,6 +91,15 @@ export function SearchForm({
             
           />
           Repositories
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="type"
+            value="contributions"
+            defaultChecked={type === "contributions"}
+          />
+          Contributions
         </label>
       </div>
       {type === "users" && (
@@ -267,19 +277,13 @@ export function SearchForm({
           </div>
         </div>
       )}
-      <div className="mt-4 flex items-center gap-6">
+      {type==="repositories" &&(
+        <>
+            <div className="mt-4 flex items-center gap-6">
           <span className="text-sm text-muted-foreground">
-            SortRepositories by:
+            Sort repositories by:
           </span>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="sort"
-                value="stars"
-                defaultChecked={sort === "stars"} 
-              />
-              Best match
-            </label>
+            
             <label className="flex items-center gap-2">
               <input
                 type="radio"
@@ -310,7 +314,7 @@ export function SearchForm({
           </div>
           <div className="mt-4 flex items-center gap-6">
             <span className="text-sm text-muted-foreground">
-              OrderRepositories by:
+              Order repositories by:
             </span>
             <label className="flex items-center gap-2">
               <input
@@ -332,6 +336,10 @@ export function SearchForm({
             </label>  
             
           </div>
+        </>
+
+      )}
+      
     </form>
     </div>
     

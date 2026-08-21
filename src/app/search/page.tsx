@@ -4,11 +4,12 @@ import { UserGrid } from "@/components/user/UserGrid";
 import { RepositoryGrid } from "@/components/repository/RepositoryGrid";
 import { Pagination } from "@/components/search/Pagination";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 
 type Props = {
   searchParams: Promise<{
-    type?: "users" | "repositories";
+    type?: "users" | "repositories" | "contributions";
     q?: string;
     sort?: "stars" | "forks" | "updated";
     order?: "asc" | "desc";
@@ -48,6 +49,10 @@ export default async function SearchPage({ searchParams }: Props) {
     forks = "",
     stars = "",
     pushedAfter = "" } = await searchParams;
+
+    if (type === "contributions") {
+      redirect(`/contributions?q=${encodeURIComponent(q)}`);
+    }
 
   const currentPage = Number(page);
 
