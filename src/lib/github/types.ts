@@ -61,8 +61,8 @@ export type ContributionSearchFilters = {
   label?: string;
   language?: string;
   repo?: string;
-  created?: string;
-  updated?: string;
+  created?: number;
+  updated?: number;
 };
 
 export type GitHubIssue = {
@@ -86,5 +86,7 @@ export type GitHubIssue = {
   createdAt: string;
   updatedAt: string;
   repositoryUrl: string;
+
+  repositoryHtmlUrl: string;
   
 };  

@@ -4,7 +4,9 @@ type ContributionSearchFormProps={
     state?: string
     language?: string
     label?:string
-    repo?:string
+    repo?:string,
+    created?: string,
+    updated?: string,
    
 }
 export function ContributionSearchForm({
@@ -12,7 +14,9 @@ export function ContributionSearchForm({
     state = "open" ,
     language = "all",
     label="all",
-    repo = ""
+    repo = "",
+    created = "all",
+    updated = "all",
     
 }: ContributionSearchFormProps ) {
     return (
@@ -120,6 +124,44 @@ export function ContributionSearchForm({
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
         />
     </div>
+    <div>
+        <label
+          htmlFor="created"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Created:
+        </label>
+
+        <select
+          id="created"
+          name="created"
+          defaultValue={created}
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+        >
+          <option value="7">Last 7 days</option>
+          <option value="30">Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+      </div>
+      <div>
+        <label
+          htmlFor="updated"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Updated:
+        </label>
+
+        <select
+          id="updated"
+          name="updated"
+          defaultValue={updated}
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+        >
+          <option value="7">Last 7 days</option>
+          <option value="30">Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+      </div>
       <button
         type="submit"
         className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"

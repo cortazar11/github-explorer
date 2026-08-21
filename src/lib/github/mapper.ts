@@ -65,5 +65,9 @@ export function mapGitHubIssue(issue: GitHubApiIssue): GitHubIssue {
     createdAt: issue.created_at,
     updatedAt: issue.updated_at,
     repositoryUrl: issue.repository_url,
+    repositoryHtmlUrl: issue.repository_url.replace(
+      "https://api.github.com/repos/",
+      "https://github.com/"
+    )
   };
 } 

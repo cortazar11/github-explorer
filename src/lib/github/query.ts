@@ -62,6 +62,14 @@ export function buildRepositorySearchQuery(
   return parts.join(" ");
 }
 
+function getDateDaysAgo(days: number): string {
+  const date = new Date();
+
+  date.setDate(date.getDate() - days);
+
+  return date.toISOString().split("T")[0];
+}
+
 export function buildContributionSearchQuery(
   query: string,
   filters: ContributionSearchFilters
@@ -69,6 +77,7 @@ export function buildContributionSearchQuery(
   const parts = [query];
 
     if (filters.state) {
+       parts.push("is:issue");
      parts.push(`is:${filters.state}`);
     }
       
@@ -82,6 +91,14 @@ export function buildContributionSearchQuery(
 
   if (filters.repo) {
     parts.push(`repo:${filters.repo}`);
+  }
+
+  if (filters.created) {
+    parts.push(`created:>${getDateDaysAgo(filters.created)}`);
+  }
+
+  if (filters.updated) {
+     parts.push(`updated:>${getDateDaysAgo(filters.updated)}`);
   }
 
   return parts.join(" ");
