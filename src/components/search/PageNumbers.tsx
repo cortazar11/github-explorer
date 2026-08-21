@@ -3,7 +3,7 @@ import { getPaginationItems } from "../../lib/pagination";
 
 type PageNumbersProps = {
   query: string;
-  type: "users" | "repositories";
+  type: "users" | "repositories" | "contributions";
   currentPage: number;
   totalPages: number;
   sort?: "stars" | "forks" | "updated";

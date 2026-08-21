@@ -73,7 +73,9 @@ export default async function ContributionsPage({searchParams}: Props) {
                 ))}
             </ul>   
 
-            <Pagination                
+            <Pagination
+                query={q}
+                type="contributions"
                 currentPage={currentPage}   
                 totalPages={Math.ceil(resultContributions.total / PER_PAGE)}
             />
