@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 
 type SearchFormProps = {
   query?: string;
-  type?: "users" | "repositories" ;
+  type?: "users" | "repositories" | "contributions" ;
   sort?: "stars" | "forks" | "updated";
   order?: "asc" | "desc";
 
@@ -44,7 +44,7 @@ export function SearchForm({
   return (
     <div>
       <form
-        action={type === "contributions" ? "/contributions" : "/search"}
+        action="/search"
         className="mx-auto mt-8 w-full max-w-2xl"
       >
       <div className="flex gap-3">
