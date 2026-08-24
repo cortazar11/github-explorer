@@ -57,13 +57,12 @@ export function SearchForm({
           className="h-12 flex-1 rounded-xl"
         />
 
-        <Button
-          type="submit"
-          size="icon"
-          className="h-12 w-12 rounded-xl"
-        >
-          <Search className="size-5" />
-        </Button>
+       <button
+        type="submit"
+        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+      >
+        Search
+      </button>
       </div>
 
       <div className="mt-4 flex items-center gap-6">
@@ -339,6 +338,14 @@ export function SearchForm({
         </>
 
       )}
+
+       {/* Second search button */}
+      <Button 
+         type="submit"
+         className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+        
+        Search
+      </Button>
       
     </form>
     </div>

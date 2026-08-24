@@ -39,6 +39,17 @@ export const searchUsers = cache(async ({
     if (!response.ok) {
      throw new Error("Failed to fetch users.");
     }
+    // if (!response.ok) {
+    //     const error = await response.text();
+
+    //     console.log(
+    //       "GitHub error:",
+    //       response.status,
+    //       error
+    //     );
+
+    //     throw new Error("Failed to fetch users.");
+    // }
 
     const json = await response.json();
 

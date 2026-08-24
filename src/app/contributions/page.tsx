@@ -3,7 +3,7 @@ import { ContributionSearchForm } from  "@/components/contributions/Contribution
 import { Pagination } from "@/components/search/Pagination";
 import { searchContributions, ContributionSearchFilters } from "@/lib/github";
 import { ContributionGrid } from "@/components/contributions/ContributionsGrid";
-
+import Link from "next/link";
 
 type Props = {
   searchParams: Promise<{
@@ -63,6 +63,13 @@ export default async function ContributionsPage({searchParams}: Props) {
     
     return (
         <main className="container mx-auto px-4 py-8">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+                    >
+                    ← Back to Home
+                </Link>
+            
             <h1 className="mb-6 text-3xl font-bold">
                 Contribution opportunities
             </h1>

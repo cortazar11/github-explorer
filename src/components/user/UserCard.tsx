@@ -8,6 +8,8 @@ type UserCardProps = {
 
 export function UserCard({ user }: UserCardProps) {
   return (
+    <div>
+      
     <Link href={`/user/${user.username}`}>
         {/* href={user.profileUrl} target="_blank" rel="noopener noreferrer" className="mx-auto block w-full"> */}
       <article
@@ -41,5 +43,6 @@ export function UserCard({ user }: UserCardProps) {
         </div>
       </article>
     </Link>
+    </div>
   );
 }
