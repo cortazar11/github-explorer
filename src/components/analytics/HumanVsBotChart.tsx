@@ -120,13 +120,13 @@ export default function HumanVsBotChart({
     <ResponsiveContainer width="100%" height={350}>
       <PieChart>
         <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            innerRadius={isMobile ? 55 : 70}
-            outerRadius={isMobile ? 90 : 120}
-            label={isMobile ? { fontSize: 11 } : true}
-            shape={myCustomPie}
+          data={data}
+          dataKey="value"
+          nameKey="name"
+          innerRadius={isMobile ? 55 : 70}
+          outerRadius={isMobile ? 90 : 120}
+          label={isMobile ? { fontSize: 11 } : true}
+          shape={myCustomPie}
         />
 
         <Legend
