@@ -120,25 +120,39 @@ export default function HumanVsBotChart({
     <ResponsiveContainer width="100%" height={350}>
       <PieChart>
         <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          innerRadius={isMobile ? 55 : 70}
-          outerRadius={isMobile ? 90 : 120}
-          label={isMobile ? { fontSize: 11 } : true}
-          shape={myCustomPie}
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={isMobile ? 55 : 70}
+            outerRadius={isMobile ? 90 : 120}
+            label={false}
+            shape={myCustomPie}
         />
 
         <Legend
-          formatter={(value) => (
-            <span
-              style={{
-                color: value === "Human" ? "#3b82f6" : "#f97316",
-              }}
-            >
-              {value}
-            </span>
-          )}
+                content={() => (
+                    <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: isMobile ? "20px" : "30px",
+                        marginTop: "10px",
+                        fontSize: isMobile ? "13px" : "14px",
+                    }}
+                    >
+                    {data.map((item, index) => (
+                        <span
+                        key={item.name}
+                        style={{
+                            color: COLORS[index],
+                            whiteSpace: "nowrap",
+                        }}
+                        >
+                        {item.name}: {item.value}
+                        </span>
+                    ))}
+                    </div>
+                )}
         />
 
         <Tooltip />
