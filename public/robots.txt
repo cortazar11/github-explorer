@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://github-explorer-mu-eight.vercel.app/sitemap.xml
